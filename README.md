@@ -4,6 +4,12 @@ mongoassist
 A very simple mongodb client wrapper.
 
 
+Install
+-------
+```
+$ pip install mongoassist
+```
+
 Usage
 -----
 ```
@@ -35,3 +41,4 @@ User.findDocs({"lastname": "sun"})
 Admin = User.clone("admins")
 Admin.updateDocs({"firstname": "xxx"}, {"$set": {"lastname": "abc"}})
 ```
+
