@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+__all__ = ["Model", "Storage", "Q"]
 from pymongo import MongoClient
 import gridfs
 
@@ -117,6 +118,10 @@ class Model(dict):
     def updateSelf(self, *args, **kw):
         return self.updateDocs({"_id": self["_id"]}, *args, **kw)
 
+    def reload(self):
+        self.update(self.findOne(self["_id"]))
+        return self
+
 
 class Storage(Model):
     __database__ = None
@@ -160,3 +165,21 @@ class Storage(Model):
     @classmethod
     def getCollection(cls):
         return cls.getClient()[cls.__database__][cls.__collection__+".files"]
+
+
+class _Op(dict):
+    def __and__(self, other):
+        op = _Op()
+        op.update(self)
+        op.update(other)
+        return op
+
+
+class _Q(dict):
+    def __getattr__(self, name):
+        return lambda arg: _Op({"$"+name: arg})
+
+    def __call__(self, field, arg):
+        return _Op({field: arg})
+Q = _Q()
+

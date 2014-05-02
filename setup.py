@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='mongoassist',
-    version='1.0',
+    version='1.2',
     url='https://github.com/guyingbo/mongoassist',
     download_url="https://github.com/guyingbo/mongoassist/archive/master.zip",
     license='MIT',
@@ -22,7 +22,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
-    package_dir={'mongoassist': 'src'},
+    install_requires=("pymongo",),
     packages=['mongoassist'],
     #include_package_data = True,
     platforms='any'
