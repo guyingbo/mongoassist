@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__all__ = ["Model", "Storage", "Q"]
+__all__ = ["Model", "Storage", "Q", "F"]
 from pymongo import MongoClient
 import gridfs
 
@@ -181,5 +181,39 @@ class _Q(dict):
 
     def __call__(self, field, arg):
         return _Op({field: arg})
+
+    def _or(self, arg):
+        return _Op({"$or": arg})
 Q = _Q()
 
+
+class F(object):
+    def __init__(self, name):
+        self.name = name
+
+    def __ge__(self, other):
+        return _Op({self.name: {"$gte": other}})
+
+    def __gt__(self, other):
+        return _Op({self.name: {"$gt": other}})
+
+    def __le__(self, other):
+        return _Op({self.name: {"$lte": other}})
+
+    def __lt__(self, other):
+        return _Op({self.name: {"$lt": other}})
+
+    def __eq__(self, other):
+        return _Op({self.name: other})
+
+    def __ne__(self, other):
+        return _Op({self.name: {"$neq": other}})
+
+    def inc(self, value):
+        return _Op({"$inc": {self.name: value}})
+
+    def set(self, value):
+        return _Op({"$set": {self.name: value}})
+
+    def __getattr__(self, func):
+        return lambda arg: _Op({"$"+func: {self.name: arg}})
