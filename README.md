@@ -1,6 +1,8 @@
 mongoassist
 ===========
 
+![travis icon](https://travis-ci.org/guyingbo/mongoassist.svg)
+
 A very simple mongodb client wrapper.
 
 
