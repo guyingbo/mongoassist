@@ -4,9 +4,6 @@ try:
 except ImportError:
     from distutils.core import setup
 
-with open('README.md', 'r') as f:
-    long_description = f.read()
-
 setup(
     name='mongoassist',
     version='1.2',
@@ -16,7 +13,7 @@ setup(
     author='Gu Yingbo',
     author_email='tensiongyb@gmail.com',
     description='A very simple mongodb client wrapper.',
-    long_description=long_description,
+    long_description='docs: https://github.com/guyingbo/mongoassist',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
